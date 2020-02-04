@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    
+    <title>Document</title>
+</head>
+<body>
+      
+
+    <div class="main">
+        <h1>How canadian are you?</h1>
+        <h4> Take the quiz and find out.</h4>
+        <button id="subBtn" type="submit">Take Quiz</button>
+    </div>
+    <div id="quiz-div"class="hide">
+          <div id="question">Question </div>
+          <div id="answerbtn">
+            <button id="btn">Ans 1</button>
+            <button id="btn">Ans 1</button>
+            <button id="btn">Ans 1</button>
+            <button id="btn">Ans 1</button>
+          </div>
+          <div class="timeDiv">
+                <span div="countDown">0</span>
+          </div>
+    </div>
+
+    <script>
+          //declare an array
+          //function to start the quiz
+          //hide elements
+          //show questions from array on dom elements
+            //
+
+        const quizQuestions = [
+                        {question: "The capital city of Canada is",
+                        answers: 
+                        [
+                          {text: "Montreal", correct: false},
+                          {text: "Ottawa", correct: true},
+                          {text: "Toronto", correct: false},
+                          {text: "Vancouver", correct: false}
+                        ]
+
+                    },
+                    {question: "The largest city in Canada is",
+                    answers:
+                    [
+                          {text: "Quebec", correct: false},
+                          {text: "Vancouver", correct: false },
+                          {text: "Montreal", correct: false},
+                          {text: "Toronto", correct: true}
+                  ]    
+                    },
+                    {question: "Canada has _____ provinces",
+                    answers:  
+                    [  
+                        {text: "10", correct: true},
+                        {text: "15", correct: false},
+                        {text: "20", correct: false},
+                        {text: "25", correct: false}
+                  ]
+                    },
+                    {question: "The smallest province in Canada is",
+                    answers:
+                    [
+                        {text: "Nova Scotia", correct: true},
+                        {text: "Quebec", correct: false},
+                        {text: "Prince Edward Island", correct: false}, 
+                        {text: "Alberta", correct: false}
+                  ]      
+                    },
+                    {question: "The first inhabitants of Canada were the",
+                    answers:
+                    [
+                        {text: "Vikings", correct: false},
+                        {text: "Native people", correct: true},
+                        {text: "French", correct: false},
+                        {text: "English", correct: false}
+                  ]      
+                    },
+                    {question: "The plant which is a symbol of Canada is",
+                    answers:
+                    [
+                             {text: "the maple leaf", correct: true} ,
+                             {text: "the oak leaf", correct: false} ,
+                             {text: "the Nootka rose", correct: false},
+                              {text: "Purple Prairie", correct: false}
+                  ]     
+                    },
+                    {question: "Name Canada’s highest mountain",
+                          answers:
+                         [ 
+                          {text: "Mount Logan", correct: true},
+                          {text: "Mont Tremblant", correct: false},
+                          {text: "Whistler Mountain", correct: false},
+                          {text: "Mount Waddington", correct: false}
+                  ]     
+                    },
+                    {question: "What is the capital of Ontario",
+                    answers:
+                    [
+                          {text: "Ottawa", correct: true},
+                          {text: "Toronto", correct: false},
+                          {text: "Hamilton", correct: false},
+                          {text: "Niagara", correct: false}
+                  ]     
+                    },
+                    {question: "Which province has the largest population",
+                    answers:
+                    [
+                         { text: "Quebec", correct: false},
+                         { text: "Ontario", correct: true}, 
+                         {text: "British Columbia", correct: false} ,
+                         {text: "Alberta", correct: false} 
+                  ]     
+
+                    },
+                    {question: "What is the most popular sport in Canada",
+                    answers:
+                    [
+                        {text: "Curling", correct: false},
+                        { text: "Golf", correct: false},
+                        {text: "Ice Hockey", correct: true},
+                        {text: "Basketball", correct: false}
+                  ]     
+                    }   
+        ]
+    //-----------------------------                
+    //creating element to show quiz on the oafe
+            // var qdiv = document.createElement('div');
+            // qdiv.class = "questionDiv";
+            // document.body.appendChild('qdiv');
+
+            // var qHeading = document.createElement('h3');
+            // qdiv.appendChild('h2');
+
+            // var qchoices = document.
+            //https://codepen.io/WebDevSimplified/pen/xNvaaz
+            //https://www.youtube.com/watch?v=VvBphozbias
+    //-------------------------------------                
+            var mainEl = document.querySelector(".main")
+            var submitEl = document.querySelector("#subBtn");
+            var secondsLeft = 60;
+            var quizEl = document.getElementById("quiz-div");
+            var timeEl = document.getElementById("countDown");
+            var qEl = document.getElementById("question");
+            var ansEl = document.getElementById("answerbtn");
+            //-------------------
+            
+            
+            submitEl.addEventListener("click", startQuiz);
+
+            function startQuiz(){
+            console.log(`i am clicked`)
+            mainEl.classList.add('hide');
+            quizEl.classList.remove('hide');
+                   
+
+            }
+            showQuestions();    
+           
+
+      //-----------
+      function showQuestions(question){
+            
+            qEl.textContent = question.question;
+
+            console.log(qEl);
+            question.answers.forEach(answer =>{
+                  var button = document.createElement('button');
+                  button.textContent = answer.text;
+                  if (answer.correct){
+                        button.dataset.correct = answer.correct
+                  }
+                  button.addEventListener('click', selectAns)
+                  ansEl.appendChild(button)
+
+            } );
+      }      
+//------------
+            function selectAns(){}
+//firs check if its correct and add or subtract score
+//then go to next question
+// showQuestions()
+//             }
+
+            
+            
+//             var timerInterval = setInterval( function() {
+//             secondsLeft--;
+//             timeEl.textContent = secondsLeft + " time";
+
+//             if(secondsLeft === 0) {
+//                   clearInterval(timerInterval);
+//                   scoreTime();
+//             }
+
+            
+//             }, 60000);
+
+    //---------------------------------------
+    </script>
+</body>
+</html>
