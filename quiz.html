@@ -207,6 +207,7 @@
             var emailEl = document.getElementById("playerEmail");
             var emailEltxt = document.getElementById("playerEmail").value;
             var rightAnsEl = document.getElementById("rightAns");
+            var timerInterval;
             //-------------------
                        
             //--------------
@@ -280,63 +281,63 @@
       }
       console.log(`the target is ${e.target.dataset.correct} and socre is ${score}`);
 
-     
-
    }
 
    
 
    function setTime() {
-      var timerInterval = setInterval( function() {
+      timerInterval = setInterval( function() {
     secondsLeft--;
     timeEl.textContent = secondsLeft;
 
-    if(secondsLeft === 0) {
-      clearInterval(timerInterval);
-      endGame();
-    }
-
-  
-  }, 1000);
+    if(secondsLeft <= 0) {
+          endGame();
+      }
+      
+      
+}, 1000);
 };
 
 function scoreBoard(){
       score = score + 5;
       scoreEl.textContent = score;
       fScoreEl.textContent = score;
+      localStorage.setItem("score", score)
 };
 
 // function showLine(){}
 
 function endGame(){
-
-      console.log("Endgame reached"
-      );
+      clearInterval(timerInterval);
+      
+      console.log("Endgame reached");
 
       subMain.classList.add('hide');
-      rightAns.classList.add('hide')  
-      scoreDiv.classList.remove('hide')
-      localStorage.setItem("email", emailEltxt);
-      localStorage.setItem("score", fScoreEl);localStorage
-      
-
-      
+      rightAns.classList.add('hide');
+      scoreDiv.classList.remove('hide'); 
 
 }
 
 function submitFn(e){
       e.preventDefault();
       var emailEltxt = document.getElementById("playerEmail").value;
-      console.log(`the value is ${emailEltxt}`)
+      localStorage.setItem("email", emailEltxt);
+      console.log(`the value is ${emailEltxt}`);
 
       if(emailEltxt == ""){
             confirm(`Enter your email to start over again!`);
             return endGame();
       } else
       {
-            startQuiz();
+            mainEl.classList.remove('hide');
+            scoreDiv.classList.add('hide');
+            questionIndex = 0;
+            score = 0;
+            secondsLeft = 60;
+            scoreEl.textContent = 0;
+           
       }
-
+      
 }
    
 //-----------
