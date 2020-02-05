@@ -42,8 +42,41 @@
                   </div>          
                   
             </div>  
+
+            <div class="row justify-content-center pt-3" >
+                  <div class="rightAns">
+                        <div class="col-12">
+                              <hr>
+                              <p class="text-left"><span class="rightAns" id="rightAns">  </span> </p>
+                   </div>
+
+                  </div>
+
+
+            </div>
+           
+           
+            <div class="row justify-content-center pt-3" >
+                  <div class="score-sub">
+                        <div class="col-12">
+                              <h3>All Done</h3>
+                              <p> Your final score is :<span id="fScore"> 0 </span> </p>
+                              <form>
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input type="email" class="form-control" id="playerEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                                    <button type="submit" class="btn btn-primary" onclick="startQuiz()">Submit</button>                 
+                              </form>
+                              
+
+                        </div>
+
+                  </div>
+
+
+            </div>
              
-            </div> 
+             
     <script>
           //declare an array
           //function to start the quiz
@@ -156,17 +189,23 @@
             // var qchoices = document.
             
     //-------------------------------------                
-            var mainEl = document.querySelector(".main")
+            var mainEl = document.querySelector(".main");
+            var scoreDiv = document.querySelector(".score-sub");
             var submitEl = document.querySelector("#subBtn");
             var score = 0;
             var secondsLeft = 60;
             var quizEl = document.getElementById("quiz-div");
             var qEl = document.getElementById("question");
             var ansEl = document.getElementById("answerbtn");
-            var subMain = document.querySelector(".main-sub")
-            subMain.classList.add('hide');    
+            var subMain = document.querySelector(".main-sub");
+            subMain.classList.add('hide'); 
+            scoreDiv.classList.add('hide') ;
+            rightAns.classList.add('hide')  
             var timeEl = document.getElementById("timer");    
-            var scoreEl = document.getElementById("score")
+            var scoreEl = document.getElementById("score");
+            var fScoreEl = document.getElementById("fScore");
+            var emailEl = document.getElementById("playerEmail")
+            var rightAnsEl = document.getElementById("rightAns")
             //-------------------
                        
             //--------------
@@ -176,6 +215,8 @@
             console.log(`i am clicked`)
             mainEl.classList.add('hide');
             subMain.classList.remove('hide');
+            scoreDiv.classList.add('hide')
+            rightAns.classList.add('hide')  
 
             showQuestion(questionIndex);
             setTime();
@@ -211,22 +252,37 @@
    function selectAns(e){
       console.log(`we are in question ${questionIndex}`);
       questionIndex++;
+      if( questionIndex === 10 ){
+            console.log(`array length is ${questionIndex}`)
+            
+            endGame();
+      }
       console.log(`we are going to the next one which is ${questionIndex}`);
+      console.log(`array length is ${questionIndex}`)
       //do things like add score or show the user that he is correct
-      showQuestion(questionIndex)
+      showQuestion(questionIndex);
 
-      //user clicked an answer, so you increase question ++ 
+     
+     //user clicked an answer, so you increase question ++ 
       //when question is increased, you go to the next set of questions
       // showQuestion();
+      rightAns.classList.remove('hide')  
       if(e.target.dataset.correct == "true"){
 
             
             scoreBoard();
             showLine();
+            rightAnsEl.textContent = "Correct";
+      } else{
+            rightAnsEl.textContent = "Wrong";
       }
       console.log(`the target is ${e.target.dataset.correct} and socre is ${score}`);
 
+     
+
    }
+
+   
 
    function setTime() {
       var timerInterval = setInterval( function() {
@@ -245,14 +301,19 @@
 function scoreBoard(){
       score = score + 5;
       scoreEl.textContent = score;
+      fScoreEl.textContent = score;
 }
 
 function showLine(){}
 
 function endGame(){
 
-      qEl.textContent = "Game Over"
-      ansEl.innerHTML = '';
+      subMain.classList.add('hide');
+      rightAns.classList.add('hide')  
+      scoreDiv.classList.remove('hide')
+      localStorage.setItem("email", emailEl.value)
+
+      
 
 }
 
