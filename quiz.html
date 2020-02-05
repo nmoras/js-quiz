@@ -65,7 +65,7 @@
                                     <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
                                     <input type="email" class="form-control" id="playerEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                                    <button type="submit" class="btn btn-primary" onclick="startQuiz()">Submit</button>                 
+                                    <button type="submit" class="btn btn-primary mr-2" onclick="submitFn(event)">Submit</button>                 
                               </form>
                               
 
@@ -204,8 +204,9 @@
             var timeEl = document.getElementById("timer");    
             var scoreEl = document.getElementById("score");
             var fScoreEl = document.getElementById("fScore");
-            var emailEl = document.getElementById("playerEmail")
-            var rightAnsEl = document.getElementById("rightAns")
+            var emailEl = document.getElementById("playerEmail");
+            var emailEltxt = document.getElementById("playerEmail").value;
+            var rightAnsEl = document.getElementById("rightAns");
             //-------------------
                        
             //--------------
@@ -255,7 +256,7 @@
       if( questionIndex === 10 ){
             console.log(`array length is ${questionIndex}`)
             
-            endGame();
+           return endGame();
       }
       console.log(`we are going to the next one which is ${questionIndex}`);
       console.log(`array length is ${questionIndex}`)
@@ -275,6 +276,7 @@
             rightAnsEl.textContent = "Correct";
       } else{
             rightAnsEl.textContent = "Wrong";
+            secondsLeft = secondsLeft - 5;
       }
       console.log(`the target is ${e.target.dataset.correct} and socre is ${score}`);
 
@@ -296,27 +298,46 @@
 
   
   }, 1000);
-}
+};
 
 function scoreBoard(){
       score = score + 5;
       scoreEl.textContent = score;
       fScoreEl.textContent = score;
-}
+};
 
-function showLine(){}
+// function showLine(){}
 
 function endGame(){
+
+      console.log("Endgame reached"
+      );
 
       subMain.classList.add('hide');
       rightAns.classList.add('hide')  
       scoreDiv.classList.remove('hide')
-      localStorage.setItem("email", emailEl.value)
+      localStorage.setItem("email", emailEltxt);
+      localStorage.setItem("score", fScoreEl);localStorage
+      
 
       
 
 }
 
+function submitFn(e){
+      e.preventDefault();
+      var emailEltxt = document.getElementById("playerEmail").value;
+      console.log(`the value is ${emailEltxt}`)
+
+      if(emailEltxt == ""){
+            confirm(`Enter your email to start over again!`);
+            return endGame();
+      } else
+      {
+            startQuiz();
+      }
+
+}
    
 //-----------
 //firs check if its correct and add or subtract score
