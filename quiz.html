@@ -5,36 +5,53 @@
     <meta name="viewport" content="width=device-width", initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     
     <title>Document</title>
 </head>
 <body>
       
-
-    <div class="main">
-        <h1>How canadian are you?</h1>
-        <h4> Take the quiz and find out.</h4>
-        <button id="subBtn" type="submit">Take Quiz</button>
-    </div>
-    <div id="quiz-div"class="hide">
-          <div id="question">Question </div>
-          <div id="answerbtn">
-            <button id="btn">Ans 1</button>
-            <button id="btn">Ans 1</button>
-            <button id="btn">Ans 1</button>
-            <button id="btn">Ans 1</button>
-          </div>
-          <div class="timeDiv">
-                <span div="countDown">0</span>
-          </div>
-    </div>
-
+      
+    <div class="container">
+         <div class="row  justify-content-center"> 
+            <div class="col-6 pt-3 main"> 
+                  <h1 class="text-center pt-3">How canadian are you?</h1>
+                  <h4 class="text-center pt-3"> Take the quiz and find out.</h4>
+                  <div class="row justify-content-center pt-5">
+                        <div col-2>
+                         <button id="subBtn" class="btn btn-primary btn-lg" type="submit">Take Quiz</button>
+                        </div>      
+                  </div> 
+            </div>   
+      </div>    
+             <div class="row justify-content-center pt-3" >
+                   <div class="main-sub">
+                         <div class="col-12 text-right">Timer: <span id="timer"> 0 </span></div>
+                         <div class="col-12 text-right">Score: <span id="score"> 0 </span></div>
+                         
+                        <div class="col-12 pt-5 justify-content-center" >     
+                        <!-- <div id="quiz-div"class="hide"> -->
+                              <h3  id="question" class="text-center">Here goes the question</h3>
+                        </div>  
+                        <div class="col-8 pt-5 justify-content-center"  >    
+                             <div class="text-center btn-group-vertical" id="answerbtn">
+                                                                     
+                                   
+                              </div>
+                        </div>   
+                  </div>          
+                  
+            </div>  
+             
+            </div> 
     <script>
           //declare an array
           //function to start the quiz
           //hide elements
           //show questions from array on dom elements
             //
+
+            var questionIndex = 0;
 
         const quizQuestions = [
                         {question: "The capital city of Canada is",
@@ -132,78 +149,123 @@
         ]
     //-----------------------------                
     //creating element to show quiz on the oafe
-            // var qdiv = document.createElement('div');
-            // qdiv.class = "questionDiv";
+            
             // document.body.appendChild('qdiv');
-
             // var qHeading = document.createElement('h3');
             // qdiv.appendChild('h2');
-
             // var qchoices = document.
-            //https://codepen.io/WebDevSimplified/pen/xNvaaz
-            //https://www.youtube.com/watch?v=VvBphozbias
+            
     //-------------------------------------                
             var mainEl = document.querySelector(".main")
             var submitEl = document.querySelector("#subBtn");
+            var score = 0;
             var secondsLeft = 60;
             var quizEl = document.getElementById("quiz-div");
-            var timeEl = document.getElementById("countDown");
             var qEl = document.getElementById("question");
             var ansEl = document.getElementById("answerbtn");
+            var subMain = document.querySelector(".main-sub")
+            subMain.classList.add('hide');    
+            var timeEl = document.getElementById("timer");    
+            var scoreEl = document.getElementById("score")
             //-------------------
-            
-            
+                       
+            //--------------
             submitEl.addEventListener("click", startQuiz);
 
-            function startQuiz(){
+      function startQuiz(){
             console.log(`i am clicked`)
             mainEl.classList.add('hide');
-            quizEl.classList.remove('hide');
-                   
+            subMain.classList.remove('hide');
 
-            }
-            showQuestions();    
-           
+            showQuestion(questionIndex);
+            setTime();
+                          
+      }
 
       //-----------
-      function showQuestions(question){
-            
-            qEl.textContent = question.question;
+      function showQuestion(i)  {
+                  ansEl.innerHTML = '';
+                  //empty ansEl 
+                  var userAnswer = '';
+                  qEl.textContent = quizQuestions[i].question;
 
-            console.log(qEl);
-            question.answers.forEach(answer =>{
+                  quizQuestions[i].answers.forEach( answer => {
                   var button = document.createElement('button');
                   button.textContent = answer.text;
+                  button.setAttribute("class", "btn btn-primary btn-lg btn-block mb-3 pr-5 pl-5");
                   if (answer.correct){
-                        button.dataset.correct = answer.correct
+                        button.dataset.correct = answer.correct          
                   }
-                  button.addEventListener('click', selectAns)
-                  ansEl.appendChild(button)
+                  button.addEventListener('click', selectAns);
+                  ansEl.appendChild(button);
+                  
+                  //everything is on the screen
+                  //wait and check for the user's answer
+                  //have a variable that stores current question 
+                  //example, you start with var question = 0;
 
             } );
-      }      
-//------------
-            function selectAns(){}
+ 
+      } ;
+        
+   function selectAns(e){
+      console.log(`we are in question ${questionIndex}`);
+      questionIndex++;
+      console.log(`we are going to the next one which is ${questionIndex}`);
+      //do things like add score or show the user that he is correct
+      showQuestion(questionIndex)
+
+      //user clicked an answer, so you increase question ++ 
+      //when question is increased, you go to the next set of questions
+      // showQuestion();
+      if(e.target.dataset.correct == "true"){
+
+            
+            scoreBoard();
+            showLine();
+      }
+      console.log(`the target is ${e.target.dataset.correct} and socre is ${score}`);
+
+   }
+
+   function setTime() {
+      var timerInterval = setInterval( function() {
+    secondsLeft--;
+    timeEl.textContent = secondsLeft;
+
+    if(secondsLeft === 0) {
+      clearInterval(timerInterval);
+      endGame();
+    }
+
+  
+  }, 1000);
+}
+
+function scoreBoard(){
+      score = score + 5;
+      scoreEl.textContent = score;
+}
+
+function showLine(){}
+
+function endGame(){
+
+      qEl.textContent = "Game Over"
+      ansEl.innerHTML = '';
+
+}
+
+   
+//-----------
 //firs check if its correct and add or subtract score
 //then go to next question
 // showQuestions()
-//             }
 
-            
-            
-//             var timerInterval = setInterval( function() {
-//             secondsLeft--;
-//             timeEl.textContent = secondsLeft + " time";
-
-//             if(secondsLeft === 0) {
-//                   clearInterval(timerInterval);
-//                   scoreTime();
-//             }
-
-            
-//             }, 60000);
 
     //---------------------------------------
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
