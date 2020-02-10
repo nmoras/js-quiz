@@ -48,14 +48,9 @@
                         <div class="col-12">
                               <hr>
                               <p class="text-left"><span class="rightAns" id="rightAns">  </span> </p>
-                   </div>
-
+                        </div>
                   </div>
-
-
             </div>
-           
-           
             <div class="row justify-content-center pt-3" >
                   <div class="score-sub">
                         <div class="col-12">
@@ -63,19 +58,37 @@
                               <p> Your final score is :<span id="fScore"> 0 </span> </p>
                               <form>
                                     <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="playerEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                                    <button type="submit" class="btn btn-primary mr-2" onclick="submitFn(event)">Submit</button>                 
+                                          <label for="exampleInputEmail1">Your Initials</label>
+                                          <div class="row">
+                                                <div class="col"> 
+                                                      <input type="text" class="form-control" id="playerInitial" aria-describedby="emailHelp" placeholder="">
+                                                </div>
+                                                <div class="col">
+                                                      <button type="submit" class="btn btn-primary mr-2" onclick="submitFn(event)">Submit</button>                 
+                                                </div> 
+                                          </div> 
+                                    </div>          
                               </form>
-                              
-
                         </div>
-
                   </div>
-
-
             </div>
-             
+    
+            <div class="row justify-content-center pt-3" id="datastore" >
+                <div class="datastore">
+                        <div class="col m-5">
+                              <h3 class="text-left m-3">High Scores</h3>
+                              <div id="userDetails"> <span><br/></span></div>
+                            
+                        </div>
+                        <form>
+                              <div class="row">
+                                    <div class="col"><button type="submit" class="btn btn-primary mr-2" onclick="restartFn()">Back</button></div>
+                                    <div class="col"><button type="submit" class="btn btn-primary mr-2" onclick="clearStorageFn()">Clear Storage</button></div>
+                              </div>      
+                        </form>      
+                  </div>         
+            </div>      
+      </div>       
              
     <script>
           //declare an array
@@ -198,28 +211,35 @@
             var qEl = document.getElementById("question");
             var ansEl = document.getElementById("answerbtn");
             var subMain = document.querySelector(".main-sub");
+            var datastore = document.querySelector(".datastore")
             subMain.classList.add('hide'); 
             scoreDiv.classList.add('hide') ;
-            rightAns.classList.add('hide')  
+            rightAns.classList.add('hide');
+            datastore.classList.add('hide'); 
             var timeEl = document.getElementById("timer");    
             var scoreEl = document.getElementById("score");
             var fScoreEl = document.getElementById("fScore");
-            var emailEl = document.getElementById("playerEmail");
-            var emailEltxt = document.getElementById("playerEmail").value;
+            var intialEl = document.getElementById("playerInitial");
+            var intialEltxt = intialEl.value;
             var rightAnsEl = document.getElementById("rightAns");
+            var userDetailIn = document.getElementById("userDetailIn");
+            var userDetailSc = document.getElementById("userDetailSc");
+            var userdetails = document.getElementById("userDetails");
             var timerInterval;
+            var userData;
             //-------------------
                        
             //--------------
             submitEl.addEventListener("click", startQuiz);
 
       function startQuiz(){
-            console.log(`i am clicked`)
+            console.log(`i am clicked`);
             mainEl.classList.add('hide');
             subMain.classList.remove('hide');
-            scoreDiv.classList.add('hide')
-            rightAns.classList.add('hide')  
-
+            scoreDiv.classList.add('hide');
+            rightAns.classList.add('hide');
+            datastore.classList.add('hide');  
+           
             showQuestion(questionIndex);
             setTime();
                           
@@ -273,7 +293,7 @@
 
             
             scoreBoard();
-            showLine();
+      // showLine();
             rightAnsEl.textContent = "Correct";
       } else{
             rightAnsEl.textContent = "Wrong";
@@ -302,7 +322,6 @@ function scoreBoard(){
       score = score + 5;
       scoreEl.textContent = score;
       fScoreEl.textContent = score;
-      localStorage.setItem("score", score)
 };
 
 // function showLine(){}
@@ -315,29 +334,82 @@ function endGame(){
       subMain.classList.add('hide');
       rightAns.classList.add('hide');
       scoreDiv.classList.remove('hide'); 
+      datastore.classList.add('hide');
 
 }
 
 function submitFn(e){
       e.preventDefault();
-      var emailEltxt = document.getElementById("playerEmail").value;
-      localStorage.setItem("email", emailEltxt);
-      console.log(`the value is ${emailEltxt}`);
+      // var emailEltxt = document.getElementById("playerEmail").value;
+      // localStorage.setItem("email", emailEltxt);
+      // console.log(`the value is ${emailEltxt}`);
 
-      if(emailEltxt == ""){
-            confirm(`Enter your email to start over again!`);
-            return endGame();
-      } else
-      {
-            mainEl.classList.remove('hide');
-            scoreDiv.classList.add('hide');
-            questionIndex = 0;
-            score = 0;
-            secondsLeft = 60;
-            scoreEl.textContent = 0;
+      // if(emailEltxt == ""){
+      //       confirm(`Enter your email to start over again!`);
+      //       return endGame();
+      // } else
+      // {
+      //       mainEl.classList.remove('hide');
+      //       scoreDiv.classList.add('hide');
+      //       questionIndex = 0;
+      //       score = 0;
+      //       secondsLeft = 60;
+      //       scoreEl.textContent = 0;
            
-      }
+      // }
+            intialEl = document.getElementById("playerInitial");
+            intialEltxt = intialEl.value;
+
+         
+        if(intialEltxt == "")   {
+              
+              alert('enter your initials');
+              return;
+        } else
+        {
+            // console.log(intialEltxt)
+            // let userData ={
+            //       user: intialEltxt,
+            //       score: score
+            // }
+            // userDataArray.push(userData)      
+            // localStorage.setItem('userData', JSON.stringify(userDataArray));
+            // let parseUserData = JSON.parse(localStorage.getItem( 'userData' ))
+            // datastore.classList.remove('hide')
+            // subMain.classList.add('hide');
+            // rightAns.classList.add('hide');
+            // scoreDiv.classList.add('hide'); 
+            // userDetailIn.textContent = intialEltxt;
+            // userDetailSc.textContent = score;
+
+            let key = intialEltxt;
+            let value = score;
+            console.log(key);
+            console.log(value);
+
+            localStorage.setItem(key, value);
+            datastore.classList.remove('hide')
+            subMain.classList.add('hide');
+            rightAns.classList.add('hide');
+            scoreDiv.classList.add('hide'); 
+        
+        for( let i = 0; i < localStorage.length; i++){
+
+            key = localStorage.key(i);
+            value = localStorage.getItem(key);
+
+            userdetails.textContent += `${[i]}. ${key}. ${value} <br>`; 
+            
+        };
+      };
+}
+
+function clearStorageFn() {
+      localStorage.clear();
+}
+function restartFn(){
       
+
 }
    
 //-----------
