@@ -2,11 +2,55 @@
     display:none;
 }
 
-body {
-    background: lightblue;
-
+body{
+    background-image: url("./assets/background.jpg");
+}
+.timer{
+   color:#910F00;
+}
+.score{
+    color: #910F00;
+    
+}
+#subBtn{
+    background: #910F00;
+    padding: 10px 20px;
+}
+.subBtn{
+    background: #910F00;
+    padding: 10px 20px;
+    border-style: none;
+}
+.quizbtn{
+    background: #910F00;
+    padding: 10px 20px;
+    border-style: none;
+    width: 120%
+}
+.quizbtn:hover{
+    color: white;  
 }
 
-body{
-color: red;
+#datastore{
+    background-color: #910F00;
+
+}
+.datastore-text{
+    color:white;
+}
+.datastore-btn{
+    padding: 10px 20px;
+    border-style: none;
+
+}
+.datastore-btn:hover{
+    border:3px solid #910F00
+}
+.right{
+    color:green;
+    font-weight: bold;
+}
+.wrong{
+    color:red;
+    font-weight: bold;
 }

@@ -7,11 +7,9 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     
-    <title>Document</title>
+    <title>Quiz</title>
 </head>
-<body>
-      
-      
+<body>   
     <div class="container">
          <div class="row  justify-content-center"> 
             <div class="col-6 pt-3 main"> 
@@ -24,10 +22,12 @@
                   </div> 
             </div>   
       </div>    
-             <div class="row justify-content-center pt-3" >
-                   <div class="main-sub">
-                         <div class="col-12 text-right">Timer: <span id="timer"> 0 </span></div>
-                         <div class="col-12 text-right">Score: <span id="score"> 0 </span></div>
+             <div class="row justify-content-center pt-3 main-sub" >  
+                   <div class="scorebg">
+                        <div class="col-12 text-right">Timer: <span id="timer"> 0 </span></div>
+                        <div class="col-12 text-right">Score: <span id="score"> 0 </span></div>
+                   </div>         
+                        
                          
                         <div class="col-12 pt-5 justify-content-center" >     
                         <!-- <div id="quiz-div"class="hide"> -->
@@ -35,12 +35,9 @@
                         </div>  
                         <div class="col-8 pt-5 justify-content-center"  >    
                              <div class="text-center btn-group-vertical" id="answerbtn">
-                                                                     
-                                   
+                                                                          
                               </div>
-                        </div>   
-                  </div>          
-                  
+                        </div>                 
             </div>  
 
             <div class="row justify-content-center pt-3" >
@@ -51,7 +48,6 @@
                    </div>
 
                   </div>
-
 
             </div>
            
@@ -73,282 +69,13 @@
 
                   </div>
 
-
+<!--  -->
             </div>
              
              
-    <script>
-          //declare an array
-          //function to start the quiz
-          //hide elements
-          //show questions from array on dom elements
-            //
-
-            var questionIndex = 0;
-
-        const quizQuestions = [
-                        {question: "The capital city of Canada is",
-                        answers: 
-                        [
-                          {text: "Montreal", correct: false},
-                          {text: "Ottawa", correct: true},
-                          {text: "Toronto", correct: false},
-                          {text: "Vancouver", correct: false}
-                        ]
-
-                    },
-                    {question: "The largest city in Canada is",
-                    answers:
-                    [
-                          {text: "Quebec", correct: false},
-                          {text: "Vancouver", correct: false },
-                          {text: "Montreal", correct: false},
-                          {text: "Toronto", correct: true}
-                  ]    
-                    },
-                    {question: "Canada has _____ provinces",
-                    answers:  
-                    [  
-                        {text: "10", correct: true},
-                        {text: "15", correct: false},
-                        {text: "20", correct: false},
-                        {text: "25", correct: false}
-                  ]
-                    },
-                    {question: "The smallest province in Canada is",
-                    answers:
-                    [
-                        {text: "Nova Scotia", correct: true},
-                        {text: "Quebec", correct: false},
-                        {text: "Prince Edward Island", correct: false}, 
-                        {text: "Alberta", correct: false}
-                  ]      
-                    },
-                    {question: "The first inhabitants of Canada were the",
-                    answers:
-                    [
-                        {text: "Vikings", correct: false},
-                        {text: "Native people", correct: true},
-                        {text: "French", correct: false},
-                        {text: "English", correct: false}
-                  ]      
-                    },
-                    {question: "The plant which is a symbol of Canada is",
-                    answers:
-                    [
-                             {text: "the maple leaf", correct: true} ,
-                             {text: "the oak leaf", correct: false} ,
-                             {text: "the Nootka rose", correct: false},
-                              {text: "Purple Prairie", correct: false}
-                  ]     
-                    },
-                    {question: "Name Canada’s highest mountain",
-                          answers:
-                         [ 
-                          {text: "Mount Logan", correct: true},
-                          {text: "Mont Tremblant", correct: false},
-                          {text: "Whistler Mountain", correct: false},
-                          {text: "Mount Waddington", correct: false}
-                  ]     
-                    },
-                    {question: "What is the capital of Ontario",
-                    answers:
-                    [
-                          {text: "Ottawa", correct: true},
-                          {text: "Toronto", correct: false},
-                          {text: "Hamilton", correct: false},
-                          {text: "Niagara", correct: false}
-                  ]     
-                    },
-                    {question: "Which province has the largest population",
-                    answers:
-                    [
-                         { text: "Quebec", correct: false},
-                         { text: "Ontario", correct: true}, 
-                         {text: "British Columbia", correct: false} ,
-                         {text: "Alberta", correct: false} 
-                  ]     
-
-                    },
-                    {question: "What is the most popular sport in Canada",
-                    answers:
-                    [
-                        {text: "Curling", correct: false},
-                        { text: "Golf", correct: false},
-                        {text: "Ice Hockey", correct: true},
-                        {text: "Basketball", correct: false}
-                  ]     
-                    }   
-        ]
-    //-----------------------------                
-    //creating element to show quiz on the oafe
-            
-            // document.body.appendChild('qdiv');
-            // var qHeading = document.createElement('h3');
-            // qdiv.appendChild('h2');
-            // var qchoices = document.
-            
-    //-------------------------------------                
-            var mainEl = document.querySelector(".main");
-            var scoreDiv = document.querySelector(".score-sub");
-            var submitEl = document.querySelector("#subBtn");
-            var score = 0;
-            var secondsLeft = 60;
-            var quizEl = document.getElementById("quiz-div");
-            var qEl = document.getElementById("question");
-            var ansEl = document.getElementById("answerbtn");
-            var subMain = document.querySelector(".main-sub");
-            subMain.classList.add('hide'); 
-            scoreDiv.classList.add('hide') ;
-            rightAns.classList.add('hide')  
-            var timeEl = document.getElementById("timer");    
-            var scoreEl = document.getElementById("score");
-            var fScoreEl = document.getElementById("fScore");
-            var emailEl = document.getElementById("playerEmail");
-            var emailEltxt = document.getElementById("playerEmail").value;
-            var rightAnsEl = document.getElementById("rightAns");
-            var timerInterval;
-            //-------------------
-                       
-            //--------------
-            submitEl.addEventListener("click", startQuiz);
-
-      function startQuiz(){
-            console.log(`i am clicked`)
-            mainEl.classList.add('hide');
-            subMain.classList.remove('hide');
-            scoreDiv.classList.add('hide')
-            rightAns.classList.add('hide')  
-
-            showQuestion(questionIndex);
-            setTime();
-                          
-      }
-
-      //-----------
-      function showQuestion(i)  {
-                  ansEl.innerHTML = '';
-                  //empty ansEl 
-                  var userAnswer = '';
-                  qEl.textContent = quizQuestions[i].question;
-
-                  quizQuestions[i].answers.forEach( answer => {
-                  var button = document.createElement('button');
-                  button.textContent = answer.text;
-                  button.setAttribute("class", "btn btn-primary btn-lg btn-block mb-3 pr-5 pl-5");
-                  if (answer.correct){
-                        button.dataset.correct = answer.correct          
-                  }
-                  button.addEventListener('click', selectAns);
-                  ansEl.appendChild(button);
-                  
-                  //everything is on the screen
-                  //wait and check for the user's answer
-                  //have a variable that stores current question 
-                  //example, you start with var question = 0;
-
-            } );
- 
-      } ;
-        
-   function selectAns(e){
-      console.log(`we are in question ${questionIndex}`);
-      questionIndex++;
-      if( questionIndex === 10 ){
-            console.log(`array length is ${questionIndex}`)
-            
-           return endGame();
-      }
-      console.log(`we are going to the next one which is ${questionIndex}`);
-      console.log(`array length is ${questionIndex}`)
-      //do things like add score or show the user that he is correct
-      showQuestion(questionIndex);
-
-     
-     //user clicked an answer, so you increase question ++ 
-      //when question is increased, you go to the next set of questions
-      // showQuestion();
-      rightAns.classList.remove('hide')  
-      if(e.target.dataset.correct == "true"){
-
-            
-            scoreBoard();
-            showLine();
-            rightAnsEl.textContent = "Correct";
-      } else{
-            rightAnsEl.textContent = "Wrong";
-            secondsLeft = secondsLeft - 5;
-      }
-      console.log(`the target is ${e.target.dataset.correct} and socre is ${score}`);
-
-   }
-
-   
-
-   function setTime() {
-      timerInterval = setInterval( function() {
-    secondsLeft--;
-    timeEl.textContent = secondsLeft;
-
-    if(secondsLeft <= 0) {
-          endGame();
-      }
-      
-      
-}, 1000);
-};
-
-function scoreBoard(){
-      score = score + 5;
-      scoreEl.textContent = score;
-      fScoreEl.textContent = score;
-      localStorage.setItem("score", score)
-};
-
-// function showLine(){}
-
-function endGame(){
-      clearInterval(timerInterval);
-      
-      console.log("Endgame reached");
-
-      subMain.classList.add('hide');
-      rightAns.classList.add('hide');
-      scoreDiv.classList.remove('hide'); 
-
-}
-
-function submitFn(e){
-      e.preventDefault();
-      var emailEltxt = document.getElementById("playerEmail").value;
-      localStorage.setItem("email", emailEltxt);
-      console.log(`the value is ${emailEltxt}`);
-
-      if(emailEltxt == ""){
-            confirm(`Enter your email to start over again!`);
-            return endGame();
-      } else
-      {
-            mainEl.classList.remove('hide');
-            scoreDiv.classList.add('hide');
-            questionIndex = 0;
-            score = 0;
-            secondsLeft = 60;
-            scoreEl.textContent = 0;
-           
-      }
-      
-}
-   
-//-----------
-//firs check if its correct and add or subtract score
-//then go to next question
-// showQuestions()
-
-
-    //---------------------------------------
-    </script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
